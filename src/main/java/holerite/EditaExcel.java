@@ -14,19 +14,18 @@ import org.apache.poi.ss.usermodel.Row;
 
 public class EditaExcel {
 	//seto onde está o arquivo
-	private static final String fileName = "C:\\Users\\maria\\OneDrive\\Documentos\\GitHub\\projeto-folks\\src\\main\\resources\\Holerite.xls";
+	private static final String fileName = "C:\\Users\\maria\\OneDrive\\Documentos\\GitHub\\Holerite\\src\\main\\resources\\Holerite.xls";
 
 	public static void main(String[] args) throws IOException {
 		//VAR
-		String nomeFuncionario = "";
-		String setorFuncionario = "";
-
-		float salarioFuncionario = 0;
+		String nomeFuncionario = "maria";
+		String setorFuncionario = "dev";
+		float salarioFuncionario = 1458;
 
 		try {
 			FileInputStream file = new FileInputStream(new File(EditaExcel.fileName));
 
-			// cria o ambiente de trabalho doe excel
+			// cria o ambiente de trabalho do excel
 			HSSFWorkbook workbook = new HSSFWorkbook(file);
 
 			// seta que a 'folha' que sera modificada, é a primeira (começa em 0)
@@ -88,12 +87,12 @@ public class EditaExcel {
 			workbook.write(outFile);
 			// fecho novamente
 			outFile.close();
-			System.out.println("Arquivo Excel editado com sucesso!".toUpperCase());
+			System.out.println("Arquivo editado com sucesso!".toUpperCase());
 
 		} catch (FileNotFoundException e) {
 			// caso não encontre
 			e.printStackTrace();
-			System.out.println("Arquivo Excel não encontrado!".toUpperCase());
+			System.out.println("Arquivo não encontrado!".toUpperCase());
 		} catch (IOException e) {
 			// caso haja erro durante a edição
 			e.printStackTrace();
