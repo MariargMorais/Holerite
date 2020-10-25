@@ -11,10 +11,11 @@ public class ConexaoBD {
 	public ResultSet rs; // buscar os resultados do bd
 	public Connection con; // fazer conex�o
 	private String driver = "com.mysql.jdbc.Driver";// Driver para conectar com o banco
-	private String caminho = "jdbc:mysql://localhost:5306/projeto";// endere�o onde o banco est� alocado
+	private String caminho = "jdbc:mysql://localhost:3306/projeto";// endere�o onde o banco est� alocado
 	private String usuario = "root";
-	private String senha = "banco2020";
+	private String senha = "";
 
+		
 	// m�todo para conectar com o banco
 	public void conexao() {
 		try {

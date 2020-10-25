@@ -116,7 +116,8 @@ public class TelaLogin extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(124, 0, 275, 144);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(TelaLogin.class.getResource("/folks/src/imagens/text1132.png")));
+		lblNewLabel.setIcon(new ImageIcon(TelaLogin.class.getResource(
+				"C:\\Users\\maria\\OneDrive\\Documentos\\GitHub\\Holerite\\src\\main\\resources\\text1132.png")));
 		contentPane.add(lblNewLabel);
 	}
 
