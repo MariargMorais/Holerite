@@ -28,6 +28,7 @@ public class EditaExcel {
 
 	public static void main(String[] args) throws IOException {
 		// VAR
+	
 		ModeloHole modH = new ModeloHole();
 		ConexaoBD conex = new ConexaoBD();
 
@@ -37,7 +38,7 @@ public class EditaExcel {
 			conex.rs.first();
 			modH.setNome(conex.rs.getString("nome"));
 			modH.setDepto(conex.rs.getString("depto"));
-			modH.setSalario(conex.rs.getString("salario"));
+			modH.setSalario(conex.rs.getFloat("salario"));
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, " Erro ao buscar funcion�rio: \n" + e);
 		}
@@ -90,8 +91,7 @@ public class EditaExcel {
 
 			// Altero o valor da celula já informada para o valor da variavel salario*9%,
 			// que é referente ao inss
-			cellINSS.setCellFormula("(D6/100)*9");
-
+			cellINSS.setCellValue(modH.getINSS());
 			// seta o mês de vigência da holerite
 			cellMonth.setCellValue("outubro/2020".toUpperCase());
 
@@ -106,17 +106,18 @@ public class EditaExcel {
 			// escrevo as alterações
 			workbook.write(outFile);
 			// fecho novamente
+			HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
 			outFile.close();
-			JOptionPane.showMessageDialog(null,"Arquivo editado com sucesso!".toUpperCase());
+			JOptionPane.showMessageDialog(null, "Arquivo editado com sucesso!".toUpperCase());
 
 		} catch (FileNotFoundException e) {
 			// caso não encontre
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null,"Arquivo não encontrado!".toUpperCase());
+			JOptionPane.showMessageDialog(null, "Arquivo não encontrado!".toUpperCase());
 		} catch (IOException e) {
 			// caso haja erro durante a edição
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null,"Erro na edição do arquivo!".toUpperCase());
+			JOptionPane.showMessageDialog(null, "Erro na edição do arquivo!".toUpperCase());
 		}
 		conex.desconecta();
 
@@ -124,7 +125,7 @@ public class EditaExcel {
 
 	public void setVisible(boolean b) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

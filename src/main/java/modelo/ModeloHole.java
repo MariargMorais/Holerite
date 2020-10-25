@@ -5,8 +5,8 @@ public class ModeloHole {
 	// vari�veis e m�todos getters e setters
 	private int id;
 	private String nome;
-
-	private String salario;
+	private float INSS;
+	private float salario;
 	private String depto;
 
 	public String getNome() {
@@ -17,12 +17,13 @@ public class ModeloHole {
 		this.nome = nome;
 	}
 
-	public String getSalario() {
+	public float getSalario() {
 		return salario;
 	}
 
-	public void setSalario(String salario) {
+	public void setSalario(float salario) {
 		this.salario = salario;
+		this.INSS = (salario/100)*9;
 	}
 
 	public String getDepto() {
@@ -41,4 +42,7 @@ public class ModeloHole {
 		this.id = id;
 	}
 
-}
+	public float getINSS() {
+		return INSS;
+	}}
+

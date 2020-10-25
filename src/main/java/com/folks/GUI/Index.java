@@ -26,6 +26,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -83,6 +84,17 @@ public class Index extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmGerarFolha = new JMenuItem("Gerar Folha");
+		mntmGerarFolha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditaExcel obj;
+				obj = new EditaExcel();
+				try {
+					EditaExcel.main(null);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}});
 		mntmGerarFolha.setBackground(new Color(173, 216, 230));
 		mntmGerarFolha.setFont(new Font("Calibri", Font.PLAIN, 14));
 		mntmGerarFolha.setHorizontalAlignment(SwingConstants.CENTER);
@@ -278,8 +290,7 @@ public class Index extends JFrame {
 		btnFolha.setBounds(374, 264, 89, 23);
 		btnFolha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				new EditaExcel().setVisible(true);; 
+				new EditaExcel().setVisible(true); 
 			}
 		});
 		btnFolha.setBackground(new Color(176, 224, 230));
