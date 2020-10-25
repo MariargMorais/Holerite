@@ -1,10 +1,20 @@
 package com.folks;
 
+import com.folks.*;
+import com.folks.conexaoBD.ConexaoBD;
+
+import modelo.ModeloFuncionario;
+import modelo.ModeloHole;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -13,14 +23,24 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 public class EditaExcel {
-	//seto onde está o arquivo
+	// seto onde está o arquivo
 	private static final String fileName = "C:\\Users\\maria\\OneDrive\\Documentos\\GitHub\\Holerite\\src\\main\\resources\\Holerite.xls";
 
 	public static void main(String[] args) throws IOException {
-		//VAR
-		String nomeFuncionario = "maria";
-		String setorFuncionario = "dev";
-		float salarioFuncionario = 1458;
+		// VAR
+		ModeloHole modH = new ModeloHole();
+		ConexaoBD conex = new ConexaoBD();
+
+		conex.conexao();
+		conex.executaSql("select nome,salario,depto from funcionarios");// Prepara instru��es SQL para buscar dados
+		try {
+			conex.rs.first();
+			modH.setNome(conex.rs.getString("nome"));
+			modH.setDepto(conex.rs.getString("depto"));
+			modH.setSalario(conex.rs.getString("salario"));
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, " Erro ao buscar funcion�rio: \n" + e);
+		}
 
 		try {
 			FileInputStream file = new FileInputStream(new File(EditaExcel.fileName));
@@ -34,12 +54,12 @@ public class EditaExcel {
 			// seta a linha de modificação do mês de vigência da holerite (começa em 0)
 			Row rowMonth = sheetHole.getRow(1);
 
-			// seta a linha de modificação dos funcionarios (começa em 0)
-			Row rowFunc = sheetHole.getRow(5);
-
 			// seta que coluna da linha de modificação do mês de vigência da holerite sera
 			// modificada (começa em 0)
 			Cell cellMonth = rowMonth.getCell(6);
+
+			// seta a linha de modificação dos funcionarios (começa em 0)
+			Row rowFunc = sheetHole.getRow(5);
 
 			// seta que coluna da linha de modificação dos funcionarios sera
 			// modificada (começa em 0)
@@ -59,18 +79,18 @@ public class EditaExcel {
 
 			// Altero o valor da celula já informada para o valor da variavel nome
 			// (em maiusculas)
-			cellFuncionario.setCellValue(nomeFuncionario.toUpperCase());
+			cellFuncionario.setCellValue(modH.getNome().toUpperCase());
 
 			// Altero o valor da celula já informada para o valor da variavel setor
 			// (em maiusculas)
-			cellSetor.setCellValue(setorFuncionario.toUpperCase());
+			cellSetor.setCellValue(modH.getDepto().toUpperCase());
 
 			// Altero o valor da celula já informada para o valor da variavel salario
-			cellSalario.setCellValue(salarioFuncionario);
+			cellSalario.setCellValue(modH.getSalario());
 
 			// Altero o valor da celula já informada para o valor da variavel salario*9%,
 			// que é referente ao inss
-			cellINSS.setCellValue((salarioFuncionario / 100) * 9);
+			cellINSS.setCellFormula("(D6/100)*9");
 
 			// seta o mês de vigência da holerite
 			cellMonth.setCellValue("outubro/2020".toUpperCase());
@@ -87,18 +107,24 @@ public class EditaExcel {
 			workbook.write(outFile);
 			// fecho novamente
 			outFile.close();
-			System.out.println("Arquivo editado com sucesso!".toUpperCase());
+			JOptionPane.showMessageDialog(null,"Arquivo editado com sucesso!".toUpperCase());
 
 		} catch (FileNotFoundException e) {
 			// caso não encontre
 			e.printStackTrace();
-			System.out.println("Arquivo não encontrado!".toUpperCase());
+			JOptionPane.showMessageDialog(null,"Arquivo não encontrado!".toUpperCase());
 		} catch (IOException e) {
 			// caso haja erro durante a edição
 			e.printStackTrace();
-			System.out.println("Erro na edição do arquivo!".toUpperCase());
+			JOptionPane.showMessageDialog(null,"Erro na edição do arquivo!".toUpperCase());
 		}
+		conex.desconecta();
 
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

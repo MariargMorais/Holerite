@@ -1,4 +1,4 @@
-package controle;
+package com.folks.conexaoBD;
 
 import java.sql.*;// pacote para acesso e processamento de dados
 import java.util.logging.Level;
@@ -10,21 +10,21 @@ public class ConexaoBD {
 	public Statement stm; // executa as instru��es SQL ao bd
 	public ResultSet rs; // buscar os resultados do bd
 	public Connection con; // fazer conex�o
-	private String driver = "com.mysql.jdbc.Driver";// Driver para conectar com o banco
-	private String caminho = "jdbc:mysql://localhost:3306/projeto";// endere�o onde o banco est� alocado
+	private String caminho = "jdbc:mysql://localhost:3306/projeto";// endere�o on // alocado
 	private String usuario = "root";
 	private String senha = "";
 
-		
 	// m�todo para conectar com o banco
 	public void conexao() {
 		try {
-
-			System.setProperty("jdbc.Drivers", driver);
+			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(caminho, usuario, senha);// Classe DriveManager chama conex�o com o banco
 			JOptionPane.showMessageDialog(null, "Conectado");
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "N�o Conectado: \n" + e.getMessage());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

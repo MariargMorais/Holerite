@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controle.ConexaoBD;
+import com.folks.conexaoBD.ConexaoBD;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -96,7 +96,7 @@ public class TelaLogin extends JFrame {
 					JOptionPane.showMessageDialog(null, "Bem vindo(a)!", "mensagem", JOptionPane.INFORMATION_MESSAGE);
 					setVisible(false);
 					try {
-						new Funcionario().setVisible(true);
+						new Index().setVisible(true);
 					} catch (ClassNotFoundException e) {
 						e.printStackTrace();
 					} catch (ParseException e) {
@@ -113,13 +113,7 @@ public class TelaLogin extends JFrame {
 		btnNewButton.setFont(new Font("Calibri", Font.PLAIN, 16));
 		contentPane.add(btnNewButton);
 
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(124, 0, 275, 144);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(TelaLogin.class.getResource(
-				"C:\\Users\\maria\\OneDrive\\Documentos\\GitHub\\Holerite\\src\\main\\resources\\text1132.png")));
-		contentPane.add(lblNewLabel);
-	}
+		}
 
 	private void initComponents() {
 

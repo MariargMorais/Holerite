@@ -1,9 +1,9 @@
 package com.folks.GUI;
 
 import com.folks.*;
+import com.folks.conexaoBD.ConexaoBD;
+import com.folks.conexaoBD.ControleFuncionario;
 
-import controle.ConexaoBD;
-import controle.ControleFuncionario;
 import modelo.ModeloFuncionario;
 
 import java.awt.EventQueue;
@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -36,14 +37,14 @@ import javax.swing.SwingConstants;
 
 
 @SuppressWarnings("serial")
-public class Funcionario extends JFrame {
+public class Index extends JFrame {
 	
 	protected static final String Interger = null;
 	//inst�ncia das classes
 	ControleFuncionario control = new ControleFuncionario();
 	ConexaoBD conex = new ConexaoBD();
 	ModeloFuncionario mod = new ModeloFuncionario();
-	int flag=0; //"bandeiras" para sinalizar o bot�o salvar
+	int flag=0; //"bandeiras" para sinalizar o boto salvar
 	
 	private JPanel contentPane;
 	private JTextField textNome;
@@ -55,7 +56,7 @@ public class Funcionario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Funcionario frame = new Funcionario();
+					Index frame = new Index();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,7 +65,7 @@ public class Funcionario extends JFrame {
 			});
 	}
 	
-	public Funcionario() throws ParseException, ClassNotFoundException {
+	public Index() throws ParseException, ClassNotFoundException {
 		initComponents();
 		setResizable(false);
 		setBackground(new Color(135, 206, 235));
@@ -86,6 +87,7 @@ public class Funcionario extends JFrame {
 		mntmGerarFolha.setFont(new Font("Calibri", Font.PLAIN, 14));
 		mntmGerarFolha.setHorizontalAlignment(SwingConstants.CENTER);
 		mnNewMenu.add(mntmGerarFolha);
+		
 		
 		JMenu mnNewMenu_1 = new JMenu("Editar");
 		mnNewMenu_1.setFont(new Font("Calibri", Font.PLAIN, 14));
@@ -131,7 +133,7 @@ public class Funcionario extends JFrame {
 		lblDepto.setFont(new Font("Calibri", Font.PLAIN, 19));
 		panel.add(lblDepto);
 		
-		JLabel lblSalrio = new JLabel("Sal\u00E1rio");
+		JLabel lblSalrio = new JLabel("Salário");
 		lblSalrio.setBounds(41, 103, 101, 24);
 		lblSalrio.setFont(new Font("Calibri", Font.PLAIN, 19));
 		panel.add(lblSalrio);
@@ -166,7 +168,7 @@ public class Funcionario extends JFrame {
 			}
 		});
 		comboBox.setFont(new Font("Calibri", Font.BOLD, 14));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Gerente de Projeto", "Programa��o", "Departamento Pessoal"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Gerente de Projeto", "Programador", "Departamento Pessoal"}));
 		comboBox.setEditable(true);
 		panel.add(comboBox);
 		comboBox.setEnabled(false);
@@ -177,7 +179,7 @@ public class Funcionario extends JFrame {
 		textPesquisa.setColumns(10);
 		
 		
-		JLabel lblProgramador = new JLabel("Funcion\u00E1rio");
+		JLabel lblProgramador = new JLabel("Funcionário");
 		lblProgramador.setBounds(202, 11, 117, 27);
 		lblProgramador.setFont(new Font("Calibri", Font.BOLD, 23));
 		contentPane.add(lblProgramador);
@@ -272,24 +274,17 @@ public class Funcionario extends JFrame {
 		textId.setEnabled(false);
 		
 		//bot�o sair
-		JButton btnSair = new JButton("Sair");
-		btnSair.setBounds(374, 264, 89, 23);
-		btnSair.addActionListener(new ActionListener() {
+		JButton btnFolha = new JButton("Folha");
+		btnFolha.setBounds(374, 264, 89, 23);
+		btnFolha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				try {
-					new Funcionario().setVisible(false);
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} 
+				new EditaExcel().setVisible(true);; 
 			}
 		});
-		btnSair.setBackground(new Color(176, 224, 230));
-		btnSair.setFont(new Font("Calibri", Font.PLAIN, 14));
-		contentPane.add(btnSair);
+		btnFolha.setBackground(new Color(176, 224, 230));
+		btnFolha.setFont(new Font("Calibri", Font.PLAIN, 14));
+		contentPane.add(btnFolha);
 		
 		//bot�o novo
 		JButton btnNovo = new JButton("Novo"); 
