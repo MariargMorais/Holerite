@@ -26,22 +26,11 @@ public class EditaExcel {
 	// seto onde está o arquivo
 	private static final String fileName = "C:\\Users\\maria\\OneDrive\\Documentos\\GitHub\\Holerite\\src\\main\\resources\\Holerite.xls";
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, SQLException {
 		// VAR
-	
+		int i=5;
 		ModeloHole modH = new ModeloHole();
 		ConexaoBD conex = new ConexaoBD();
-
-		conex.conexao();
-		conex.executaSql("select nome,salario,depto from funcionarios");// Prepara instru��es SQL para buscar dados
-		try {
-			conex.rs.first();
-			modH.setNome(conex.rs.getString("nome"));
-			modH.setDepto(conex.rs.getString("depto"));
-			modH.setSalario(conex.rs.getFloat("salario"));
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, " Erro ao buscar funcion�rio: \n" + e);
-		}
 
 		try {
 			FileInputStream file = new FileInputStream(new File(EditaExcel.fileName));
@@ -58,40 +47,65 @@ public class EditaExcel {
 			// seta que coluna da linha de modificação do mês de vigência da holerite sera
 			// modificada (começa em 0)
 			Cell cellMonth = rowMonth.getCell(6);
+			
+			conex.conexao();
+				// Prepara instru��es SQL para buscar dados
+				
+			conex.executaSql("select nome,salario,depto from funcionarios");
+						
+						
+			while(conex.rs.next()==true) {
+				if (i>=5 && i<10) {
+					try {
+						//conex.rs.first();
+						modH.setNome(conex.rs.getString("nome"));
+						modH.setDepto(conex.rs.getString("depto"));
+						modH.setSalario(conex.rs.getFloat("salario"));
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(null, " Erro ao buscar infos: \n" + e);
+					}
+					
+				// seta a linha de modificação dos funcionarios (começa em 0)
+				Row rowFunc = sheetHole.getRow(i);
 
-			// seta a linha de modificação dos funcionarios (começa em 0)
-			Row rowFunc = sheetHole.getRow(5);
+				// seta que coluna da linha de modificação dos funcionarios sera
+				// modificada (começa em 0)
+				Cell cellFuncionario = rowFunc.getCell(1);
 
-			// seta que coluna da linha de modificação dos funcionarios sera
-			// modificada (começa em 0)
-			Cell cellFuncionario = rowFunc.getCell(1);
+				// seta que coluna da linha de modificação dos funcionarios sera
+				// modificada (começa em 0)
+				Cell cellSetor = rowFunc.getCell(2);
 
-			// seta que coluna da linha de modificação dos funcionarios sera
-			// modificada (começa em 0)
-			Cell cellSetor = rowFunc.getCell(2);
+				// seta que coluna da linha de modificação dos funcionarios sera
+				// modificada (começa em 0)
+				Cell cellSalario = rowFunc.getCell(3);
 
-			// seta que coluna da linha de modificação dos funcionarios sera
-			// modificada (começa em 0)
-			Cell cellSalario = rowFunc.getCell(3);
+				// seta que coluna da linha de modificação dos funcionarios sera
+				// modificada (começa em 0)
+				Cell cellINSS = rowFunc.getCell(5);
 
-			// seta que coluna da linha de modificação dos funcionarios sera
-			// modificada (começa em 0)
-			Cell cellINSS = rowFunc.getCell(5);
+				// Altero o valor da celula já informada para o valor da variavel nome
+				// (em maiusculas)
+				cellFuncionario.setCellValue(modH.getNome().toUpperCase());
 
-			// Altero o valor da celula já informada para o valor da variavel nome
-			// (em maiusculas)
-			cellFuncionario.setCellValue(modH.getNome().toUpperCase());
+				// Altero o valor da celula já informada para o valor da variavel setor
+				// (em maiusculas)
+				cellSetor.setCellValue(modH.getDepto().toUpperCase());
 
-			// Altero o valor da celula já informada para o valor da variavel setor
-			// (em maiusculas)
-			cellSetor.setCellValue(modH.getDepto().toUpperCase());
+				// Altero o valor da celula já informada para o valor da variavel salario
+				cellSalario.setCellValue(modH.getSalario());
 
-			// Altero o valor da celula já informada para o valor da variavel salario
-			cellSalario.setCellValue(modH.getSalario());
+				// Altero o valor da celula já informada para o valor da variavel salario*9%,
+				// que é referente ao inss
+				cellINSS.setCellValue(modH.getINSS());
+				i++;
+				}else{
+					break;
+				}
+				
+				
+			}
 
-			// Altero o valor da celula já informada para o valor da variavel salario*9%,
-			// que é referente ao inss
-			cellINSS.setCellValue(modH.getINSS());
 			// seta o mês de vigência da holerite
 			cellMonth.setCellValue("outubro/2020".toUpperCase());
 
@@ -118,14 +132,12 @@ public class EditaExcel {
 			// caso haja erro durante a edição
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Erro na edição do arquivo!".toUpperCase());
+		}finally {
+			conex.desconecta();
 		}
-		conex.desconecta();
+		
 
 	}
 
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }

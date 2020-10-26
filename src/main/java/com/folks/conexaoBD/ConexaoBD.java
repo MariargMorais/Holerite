@@ -19,7 +19,7 @@ public class ConexaoBD {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(caminho, usuario, senha);// Classe DriveManager chama conex�o com o banco
-			JOptionPane.showMessageDialog(null, "Conectado");
+			//JOptionPane.showMessageDialog(null, "Conectado");
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "N�o Conectado: \n" + e.getMessage());
 		} catch (ClassNotFoundException e) {
@@ -44,7 +44,7 @@ public class ConexaoBD {
 	public void desconecta() {
 		try {
 			con.close();// Fechar e liberar um objeto de conex�o
-			JOptionPane.showMessageDialog(null, " Desconectado com sucesso");
+			//JOptionPane.showMessageDialog(null, " Desconectado com sucesso");
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, " Erro ao fechar conex�o do BD: \n" + e.getMessage());
 		}
